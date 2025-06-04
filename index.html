@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirection...</title>
+
+  <script
+    defer
+    data-website-id="683feeb61727a4bb173a55ff"
+    data-domain="rubenhassid.ai"
+    src="https://datafa.st/js/script.js">
+  </script>
+
+  <!-- ✅ Redirection avec cookies DataFast + ref -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      console.log("⏳ Attente de 3 secondes pour laisser le script DataFast poser les cookies...");
+
+      setTimeout(() => {
+        const getCookie = (name) =>
+          document.cookie
+            .split("; ")
+            .find(row => row.startsWith(name + "="))
+            ?.split("=")[1] || "";
+
+        const visitorId = getCookie("datafast_visitor_id");
+        const sessionId = getCookie("datafast_session_id");
+
+        console.log("🧪 Visitor ID:", visitorId);
+        console.log("🧪 Session ID:", sessionId);
+
+        if (visitorId && sessionId) {
+          const base = "https://tool-monsters.checkoutpage.com/test-rubs";
+          const ref = "toolmonsters-lab";
+          const url = `${base}?ref=${ref}&datafast_visitor_id=${visitorId}&datafast_session_id=${sessionId}`;
+
+          console.log("➡️ Redirection vers :", url);
+          window.location.href = url;
+        } else {
+          console.warn("❌ Cookies DataFast non trouvés après 3s. Redirection annulée.");
+        }
+      }, 3000); // Augmenté à 3 secondes
+    });
+  </script>
+
+  <style>
+    body { background: white; margin: 0; }
+  </style>
+</head>
+<body>
+</body>
+</html>
