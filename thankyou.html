@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Merci pour votre achat !</title>
+
+  <!-- Script DataFast -->
+  <script
+    defer
+    data-website-id="683feeb61727a4bb173a55ff"
+    data-domain="rubenhassid.ai"
+    src="https://datafa.st/js/script.js">
+  </script>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 4rem;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+  <h1>✅ Merci pour votre achat !</h1>
+  <p>Votre commande a bien été enregistrée.</p>
+
+  <script>
+    // Récupération des paramètres d'URL
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get("email");
+    const amount = params.get("amount") || "0";
+    const visitorId = params.get("datafast_visitor_id");
+    const sessionId = params.get("datafast_session_id");
+
+    if (!email) {
+      console.warn("❌ Email manquant dans l'URL — tracking DataFast non déclenché.");
+    } else {
+      let timeout = setTimeout(() => {
+        console.warn("⏱️ Timeout : DataFast ne s'est pas chargé à temps.");
+        clearInterval(waitForDatafast);
+      }, 5000);
+
+      const waitForDatafast = setInterval(() => {
+        if (typeof window.datafast === "function") {
+          clearInterval(waitForDatafast);
+          clearTimeout(timeout);
+
+          window.datafast("payment", {
+            email: email,
+            amount: amount,
+            currency: "USD",
+            country: "auto",
+            visitor_id: visitorId,
+            session_id: sessionId
+          });
+
+          console.log("🎯 Paiement tracké côté client pour :", email);
+        }
+      }, 300);
+    }
+  </script>
+</body>
+</html>
